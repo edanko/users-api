@@ -1,0 +1,5 @@
+package: ports
+generate:
+  echo-server: true
+#  embedded-spec: false
+output: cmd/users-api/internal/ports/user-server.gen.go

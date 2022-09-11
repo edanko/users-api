@@ -1,0 +1,4 @@
+package: ports
+generate:
+  models: true
+output: cmd/users-api/internal/ports/user-types.gen.go

@@ -1,0 +1,42 @@
+logger:
+  level: "debug"
+app:
+  environment: development
+  shutdownTimeout: 5s
+db:
+  host: 192.168.1.214
+  port: 5433
+  user: user
+  password: password
+  database: users
+  sslMode: disable
+ldap:
+  url: ldap://192.168.1.214:3890
+  user: uid=admin,ou=people,dc=example,dc=com
+  password: password
+  base_dn: "dc=example,dc=com"
+  users_dn: "ou=people"
+  users_filter: "(objectClass=person)"
+  groups_dn: "ou=groups"
+  groups_filter: "(member=%s)"
+nats:
+  host: 192.168.1.214
+  port: 4223
+debug:
+  host: 0.0.0.0
+  port: 4000
+http:
+  host: 0.0.0.0
+  port: 3000
+  readTimeout: 5s
+  writeTimeout: 10s
+  idleTimeout: 120s
+grpc:
+  host: 0.0.0.0
+  port: 3001
+  serverMinTime: 5m
+  serverTime: 2h
+  serverTimeout: 20s
+  connTime: 10s
+  connTimeout: 20s
+
