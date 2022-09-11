@@ -1,0 +1,133 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: users-api
+  description: TODO
+  contact:
+    name: Egor Danko
+    email: qwertyone@gmail.com
+servers:
+  - url: 'http://{hostname}:3000/v1'
+    variables:
+      hostname:
+        default: localhost
+tags:
+  - name: user
+    description: TODO
+paths:
+  /users:
+    get:
+      summary: List Users
+      operationId: listUsers
+      responses:
+        '200':
+          $ref: '#/components/responses/ListUsersResponse'
+      description: Retrieves a list of users.
+      tags:
+        - user
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - published
+              - draft
+            default: published
+          in: query
+          name: group
+  '/users/{login}':
+    parameters:
+      - schema:
+          type: string
+        name: login
+        in: path
+        required: true
+        description: Id of an existing user
+    get:
+      summary: Get User by Login
+      tags:
+        - user
+      responses:
+        '200':
+          $ref: '#/components/responses/GetUserResponse'
+        '404':
+          description: User Not Found
+      operationId: getUser
+      description: Retrieve the information of the user with the matching user login.
+  /users/sync:
+    parameters: []
+    post:
+      summary: Change User Name
+      operationId: syncUsers
+      responses:
+        '204':
+          description: No Content
+      tags:
+        - user
+      description: Sync Users.
+  '/users/search/{query}':
+    get:
+      summary: Your GET endpoint
+      tags:
+        - user
+      responses:
+        '200':
+          $ref: '#/components/responses/SearchUsersResponse'
+      operationId: searchUsers
+      description: todo
+    parameters:
+      - schema:
+          type: string
+        name: query
+        in: path
+        required: true
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      description: User model.
+      properties:
+        login:
+          type: string
+        name:
+          type: string
+          description: Unique name for the given user.
+        email:
+          type: string
+        groups:
+          type: array
+          items:
+            type: string
+      required:
+        - login
+        - name
+        - email
+        - groups
+  responses:
+    GetUserResponse:
+      description: Get User Response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+    ListUsersResponse:
+      description: Paginated Users Response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              users:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+            required:
+              - users
+    SearchUsersResponse:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: string
